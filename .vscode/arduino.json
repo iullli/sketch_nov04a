@@ -1,0 +1,7 @@
+{
+    "board": "arduino:avr:nano",
+    "sketch": "sketch_nov04a.ino",
+    "port": "COM7",
+    "programmer": "avrisp",
+    "configuration": "cpu=atmega328old"
+}
