@@ -11,10 +11,10 @@ void Timer_init()
     TCCR1A &= ~(1<<COM1A0);
     TCCR1A |= (1<<COM1A1);      ////PWM non invrting mode
 
-    TCCR1B |=  (1<<CS10) | (1<<CS12);     /// prescaler = 64
+    TCCR1B |=  (1<<CS10) | (1<<CS11);     /// prescaler = 64
     TCCR1B &= ~(1<<CS12);
 
-   PinMode(PORTB,9,OUTPUT); //// output pin 9 portb 
+
 
 
 // OCR1A = 1023;

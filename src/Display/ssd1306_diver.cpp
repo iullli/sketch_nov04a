@@ -26,10 +26,6 @@ void I2C_Start(void)
  TWCR = (1 << TWSTA) | (1 << TWEN) | (1 << TWINT) ;
  while(!(TWCR & (1<<TWINT)));
 
-//  TWDR = 0x3C;
-
-//  TWCR =(1 << TWEN) | (1 << TWINT) ;
-// while(!(TWCR & (1<<TWINT)));
 }
 
 void I2C_Repeted_Start(char read_address)
@@ -59,10 +55,6 @@ void I2C_Stop(void)
 /// write
 void I2C_WRITE(unsigned char data)
 {
-
-// TWDR = 0x3C;
-// TWCR = (1<<TWINT)|(1<<TWEN);
-// while(!(TWCR&(1<<TWINT)));
 
 TWDR = data;
 TWCR = (1<<TWINT)|(1<<TWEN);
@@ -191,20 +183,8 @@ void SSD1306_DrawBitmap(int16_t x, int16_t y, const unsigned char* bitmap, int16
     }
 }
 
-void ssd1306_DrawText(int16_t x, int16_t y, char i)
-{
-char str[50]= {0};
-int s=0;
-sprintf(str,"%d",i);
-while (str[s]!=0){
-    ssd1306_Drawletter(x,y,str[s]);
-    s++;
-}
-s=0;
 
-}
-
-void ssd1306_Drawletter(int8_t x, int8_t y, uint8_t letter)
+void ssd1306_Drawletter(int8_t x, int8_t y, uint8_t letter, uint8_t color)
 {
     uint8_t call = 0 ;
     uint8_t diff = letter - 0x20;
@@ -214,24 +194,78 @@ void ssd1306_Drawletter(int8_t x, int8_t y, uint8_t letter)
         {
      call = (ASCI[diff][j]>>k)&0x01;
      if(call != 0)
-     ssd1306_drawPixel(j+x,k+y,1);
+     ssd1306_drawPixel(j+x,k+y,color);
      else
-     ssd1306_drawPixel(j+x,k+y,0);
+     ssd1306_drawPixel(j+x,k+y,!color);
     
     }
 }
 }
 
-void ssd1306_Strings(int8_t x, int8_t y, char text[])
+void ssd1306_Strings(int8_t x, int8_t y, char text[], uint8_t color)
 {
     uint8_t i = 0;
 while(text[i] != 0)
 {   
     x=x+5;
-    ssd1306_Drawletter(x+i,y,text[i]);
+    ssd1306_Drawletter(x+i,y,text[i],color);
     i++;
 }
 i=0;
 }
 
+void ssd1306_drawrectagle(int8_t x, int8_t y, int8_t color, int8_t lenght , int8_t wide)
+{
+    int i=0;
+    int j=0;
 
+for(j = y; j <= wide + y;j++)
+{
+for(i = x;i <= lenght + x;i++)
+{
+    ssd1306_drawPixel(i,j,1);
+}
+   ssd1306_drawPixel(i,j,1);
+}
+}
+
+
+void ssd1306_drawlinev(int8_t x, int8_t y, int8_t color, int8_t lenght)
+{
+int i=0;
+for(i = y;i <= lenght + y;i++)
+{
+    ssd1306_drawPixel(x,i+y,1);
+}
+}
+
+void ssd1306_drawlineh(int8_t x, int8_t y, int8_t color, int8_t lenght)
+{
+int i=0;
+for(i = x;i <= lenght + x;i++)
+{
+    ssd1306_drawPixel(x+i,y,1);
+}
+}
+
+void Init_Userinterface(void)
+{
+ssd1306_drawrectagle(4,20,1,17,30);
+ssd1306_drawrectagle(32,20,1,17,30);
+ssd1306_drawrectagle(60,20,1,17,30);
+ssd1306_Strings(110,1,"+",1);
+ssd1306_Strings(110,60,"-",1);
+ssd1306_Strings(55,1,"A",1);
+ssd1306_drawlinev(13,2, 1, 20);
+ssd1306_drawlineh(7,3,1,20);
+ssd1306_drawlineh(35,3,1,37);
+ssd1306_drawlineh(39,50,1,11);
+ssd1306_drawlineh(45,63,1,20);
+ssd1306_drawlinev(90,25,1,12);
+ssd1306_drawlineh(22,15,1,20);
+ssd1306_drawlinev(43,8,1,10);
+ssd1306_drawlinev(65,8,1,10);
+ssd1306_drawlineh(11,48,1,14);
+ssd1306_update();
+
+}

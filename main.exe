@@ -1,0 +1,820 @@
+# 1 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\main.cpp"
+# 1 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a//"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\main.cpp"
+
+# 1 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\Pin_Config/driver.h" 1
+# 16 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\Pin_Config/driver.h"
+void WrtiePin(uint8_t port, uint8_t pin, uint8_t state);
+void PinMode(uint8_t port, uint8_t pin, uint8_t mode);
+# 3 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\main.cpp" 2
+
+# 1 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\ssd1306.h" 1
+# 1 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stdint.h" 1 3 4
+# 9 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stdint.h" 3 4
+# 1 "c:\\mingw\\include\\stdint.h" 1 3 4
+# 34 "c:\\mingw\\include\\stdint.h" 3 4
+       
+# 35 "c:\\mingw\\include\\stdint.h" 3
+# 46 "c:\\mingw\\include\\stdint.h" 3
+# 1 "c:\\mingw\\include\\_mingw.h" 1 3
+# 55 "c:\\mingw\\include\\_mingw.h" 3
+       
+# 56 "c:\\mingw\\include\\_mingw.h" 3
+# 66 "c:\\mingw\\include\\_mingw.h" 3
+# 1 "c:\\mingw\\include\\msvcrtver.h" 1 3
+# 35 "c:\\mingw\\include\\msvcrtver.h" 3
+       
+# 36 "c:\\mingw\\include\\msvcrtver.h" 3
+# 67 "c:\\mingw\\include\\_mingw.h" 2 3
+
+
+
+
+
+
+# 1 "c:\\mingw\\include\\w32api.h" 1 3
+# 35 "c:\\mingw\\include\\w32api.h" 3
+       
+# 36 "c:\\mingw\\include\\w32api.h" 3
+# 59 "c:\\mingw\\include\\w32api.h" 3
+# 1 "c:\\mingw\\include\\sdkddkver.h" 1 3
+# 35 "c:\\mingw\\include\\sdkddkver.h" 3
+       
+# 36 "c:\\mingw\\include\\sdkddkver.h" 3
+# 60 "c:\\mingw\\include\\w32api.h" 2 3
+# 74 "c:\\mingw\\include\\_mingw.h" 2 3
+# 47 "c:\\mingw\\include\\stdint.h" 2 3
+
+
+
+
+
+
+
+# 1 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stddef.h" 1 3 4
+# 357 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stddef.h" 3 4
+
+# 357 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stddef.h" 3 4
+typedef short unsigned int wint_t;
+# 55 "c:\\mingw\\include\\stdint.h" 2 3
+
+
+
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+typedef short int16_t;
+typedef unsigned short uint16_t;
+typedef int int32_t;
+typedef unsigned uint32_t;
+typedef long long int64_t;
+typedef unsigned long long uint64_t;
+
+
+
+typedef signed char int_least8_t;
+typedef unsigned char uint_least8_t;
+typedef short int_least16_t;
+typedef unsigned short uint_least16_t;
+typedef int int_least32_t;
+typedef unsigned uint_least32_t;
+typedef long long int_least64_t;
+typedef unsigned long long uint_least64_t;
+
+
+
+
+
+typedef signed char int_fast8_t;
+typedef unsigned char uint_fast8_t;
+typedef short int_fast16_t;
+typedef unsigned short uint_fast16_t;
+typedef int int_fast32_t;
+typedef unsigned int uint_fast32_t;
+typedef long long int_fast64_t;
+typedef unsigned long long uint_fast64_t;
+# 106 "c:\\mingw\\include\\stdint.h" 3
+ typedef int __intptr_t;
+
+typedef __intptr_t intptr_t;
+# 118 "c:\\mingw\\include\\stdint.h" 3
+ typedef unsigned int __uintptr_t;
+
+typedef __uintptr_t uintptr_t;
+
+
+
+
+
+
+
+typedef long long intmax_t;
+typedef unsigned long long uintmax_t;
+# 10 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stdint.h" 2 3 4
+# 2 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\ssd1306.h" 2
+# 1 "c:\\mingw\\include\\stdio.h" 1 3
+# 38 "c:\\mingw\\include\\stdio.h" 3
+       
+# 39 "c:\\mingw\\include\\stdio.h" 3
+# 69 "c:\\mingw\\include\\stdio.h" 3
+# 1 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stddef.h" 1 3 4
+# 216 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stddef.h" 3 4
+typedef unsigned int size_t;
+# 70 "c:\\mingw\\include\\stdio.h" 2 3
+# 94 "c:\\mingw\\include\\stdio.h" 3
+# 1 "c:\\mingw\\include\\sys/types.h" 1 3
+# 34 "c:\\mingw\\include\\sys/types.h" 3
+       
+# 35 "c:\\mingw\\include\\sys/types.h" 3
+# 62 "c:\\mingw\\include\\sys/types.h" 3
+  typedef long __off32_t;
+
+
+
+
+  typedef __off32_t _off_t;
+
+
+
+
+
+
+
+  typedef _off_t off_t;
+# 91 "c:\\mingw\\include\\sys/types.h" 3
+  typedef long long __off64_t;
+
+
+
+
+
+
+  typedef __off64_t off64_t;
+# 115 "c:\\mingw\\include\\sys/types.h" 3
+  typedef int _ssize_t;
+
+
+
+
+
+
+
+  typedef _ssize_t ssize_t;
+# 95 "c:\\mingw\\include\\stdio.h" 2 3
+
+
+
+
+
+
+
+# 1 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stdarg.h" 1 3 4
+# 40 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\stdarg.h" 3 4
+typedef __builtin_va_list __gnuc_va_list;
+# 103 "c:\\mingw\\include\\stdio.h" 2 3
+# 210 "c:\\mingw\\include\\stdio.h" 3
+typedef struct _iobuf
+{
+  char *_ptr;
+  int _cnt;
+  char *_base;
+  int _flag;
+  int _file;
+  int _charbuf;
+  int _bufsiz;
+  char *_tmpfname;
+} FILE;
+# 239 "c:\\mingw\\include\\stdio.h" 3
+extern __attribute__((__dllimport__)) FILE _iob[];
+# 252 "c:\\mingw\\include\\stdio.h" 3
+extern "C" {
+
+
+
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * fopen (const char *, const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * freopen (const char *, const char *, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fflush (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fclose (FILE *);
+
+
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int remove (const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int rename (const char *, const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * tmpfile (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) char * tmpnam (char *);
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) char *_tempnam (const char *, const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _rmtmp (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _unlink (const char *);
+# 289 "c:\\mingw\\include\\stdio.h" 3
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) char * tempnam (const char *, const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int rmtmp (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int unlink (const char *);
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int setvbuf (FILE *, char *, int, size_t);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) void setbuf (FILE *, char *);
+# 342 "c:\\mingw\\include\\stdio.h" 3
+extern int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,2,3))) __mingw_fprintf(FILE*, const char*, ...);
+extern int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,1,2))) __mingw_printf(const char*, ...);
+extern int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,2,3))) __mingw_sprintf(char*, const char*, ...);
+extern int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,3,4))) __mingw_snprintf(char*, size_t, const char*, ...);
+extern int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,2,0))) __mingw_vfprintf(FILE*, const char*, __builtin_va_list);
+extern int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,1,0))) __mingw_vprintf(const char*, __builtin_va_list);
+extern int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,2,0))) __mingw_vsprintf(char*, const char*, __builtin_va_list);
+extern int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,3,0))) __mingw_vsnprintf(char*, size_t, const char*, __builtin_va_list);
+# 376 "c:\\mingw\\include\\stdio.h" 3
+extern unsigned int _mingw_output_format_control( unsigned int, unsigned int );
+# 453 "c:\\mingw\\include\\stdio.h" 3
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fprintf (FILE *, const char *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int printf (const char *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int sprintf (char *, const char *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int vfprintf (FILE *, const char *, __builtin_va_list);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int vprintf (const char *, __builtin_va_list);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int vsprintf (char *, const char *, __builtin_va_list);
+# 478 "c:\\mingw\\include\\stdio.h" 3
+ int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__ms_printf__,2,3))) __msvcrt_fprintf(FILE *, const char *, ...);
+ int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__ms_printf__,1,2))) __msvcrt_printf(const char *, ...);
+ int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__ms_printf__,2,3))) __msvcrt_sprintf(char *, const char *, ...);
+ int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__ms_printf__,2,0))) __msvcrt_vfprintf(FILE *, const char *, __builtin_va_list);
+ int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__ms_printf__,1,0))) __msvcrt_vprintf(const char *, __builtin_va_list);
+ int __attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__ms_printf__,2,0))) __msvcrt_vsprintf(char *, const char *, __builtin_va_list);
+
+
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _snprintf (char *, size_t, const char *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _vsnprintf (char *, size_t, const char *, __builtin_va_list);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _vscprintf (const char *, __builtin_va_list);
+# 501 "c:\\mingw\\include\\stdio.h" 3
+__attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,3,4)))
+int snprintf (char *, size_t, const char *, ...);
+
+__attribute__((__cdecl__)) __attribute__((__nothrow__)) __attribute__((__format__(__mingw_printf__,3,0)))
+int vsnprintf (char *, size_t, const char *, __builtin_va_list);
+
+__attribute__((__cdecl__)) __attribute__((__nothrow__))
+int vscanf (const char * __restrict__, __builtin_va_list);
+
+__attribute__((__cdecl__)) __attribute__((__nothrow__))
+int vfscanf (FILE * __restrict__, const char * __restrict__, __builtin_va_list);
+
+__attribute__((__cdecl__)) __attribute__((__nothrow__))
+int vsscanf (const char * __restrict__, const char * __restrict__, __builtin_va_list);
+# 646 "c:\\mingw\\include\\stdio.h" 3
+__attribute__((__cdecl__)) __attribute__((__nothrow__)) ssize_t
+getdelim (char ** __restrict__, size_t * __restrict__, int, FILE * __restrict__);
+
+__attribute__((__cdecl__)) __attribute__((__nothrow__)) ssize_t
+getline (char ** __restrict__, size_t * __restrict__, FILE * __restrict__);
+# 666 "c:\\mingw\\include\\stdio.h" 3
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fscanf (FILE *, const char *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int scanf (const char *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int sscanf (const char *, const char *, ...);
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fgetc (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) char * fgets (char *, int, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fputc (int, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fputs (const char *, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) char * gets (char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int puts (const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int ungetc (int, FILE *);
+# 687 "c:\\mingw\\include\\stdio.h" 3
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _filbuf (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _flsbuf (int, FILE *);
+
+
+
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int getc (FILE *);
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int getc (FILE * __F)
+{
+  return (--__F->_cnt >= 0)
+    ? (int) (unsigned char) *__F->_ptr++
+    : _filbuf (__F);
+}
+
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int putc (int, FILE *);
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int putc (int __c, FILE * __F)
+{
+  return (--__F->_cnt >= 0)
+    ? (int) (unsigned char) (*__F->_ptr++ = (char)__c)
+    : _flsbuf (__c, __F);
+}
+
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int getchar (void);
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int getchar (void)
+{
+  return (--(&_iob[0])->_cnt >= 0)
+    ? (int) (unsigned char) *(&_iob[0])->_ptr++
+    : _filbuf ((&_iob[0]));
+}
+
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int putchar(int);
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int putchar(int __c)
+{
+  return (--(&_iob[1])->_cnt >= 0)
+    ? (int) (unsigned char) (*(&_iob[1])->_ptr++ = (char)__c)
+    : _flsbuf (__c, (&_iob[1]));}
+# 734 "c:\\mingw\\include\\stdio.h" 3
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) size_t fread (void *, size_t, size_t, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) size_t fwrite (const void *, size_t, size_t, FILE *);
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fseek (FILE *, long, int);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) long ftell (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) void rewind (FILE *);
+# 787 "c:\\mingw\\include\\stdio.h" 3
+typedef long long fpos_t;
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fgetpos (FILE *, fpos_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fsetpos (FILE *, const fpos_t *);
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int feof (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int ferror (FILE *);
+
+
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int feof (FILE * __F){ return __F->_flag & 0x0010; }
+inline __attribute__((__cdecl__)) __attribute__((__nothrow__)) int ferror (FILE * __F){ return __F->_flag & 0x0020; }
+
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) void clearerr (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) void perror (const char *);
+
+
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * _popen (const char *, const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _pclose (FILE *);
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * popen (const char *, const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int pclose (FILE *);
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _flushall (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _fgetchar (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _fputchar (int);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * _fdopen (int, const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _fileno (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _fcloseall (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * _fsopen (const char *, const char *, int);
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _getmaxstdio (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _setmaxstdio (int);
+# 859 "c:\\mingw\\include\\stdio.h" 3
+unsigned int __attribute__((__cdecl__)) __mingw_get_output_format (void);
+unsigned int __attribute__((__cdecl__)) __mingw_set_output_format (unsigned int);
+
+
+
+
+
+
+
+int __attribute__((__cdecl__)) __mingw_get_printf_count_output (void);
+int __attribute__((__cdecl__)) __mingw_set_printf_count_output (int);
+# 885 "c:\\mingw\\include\\stdio.h" 3
+inline __attribute__((__always_inline__)) unsigned int __attribute__((__cdecl__)) _get_output_format (void)
+{ return __mingw_get_output_format (); }
+
+inline __attribute__((__always_inline__)) unsigned int __attribute__((__cdecl__)) _set_output_format (unsigned int __style)
+{ return __mingw_set_output_format (__style); }
+# 910 "c:\\mingw\\include\\stdio.h" 3
+inline __attribute__((__always_inline__)) int __attribute__((__cdecl__)) _get_printf_count_output (void)
+{ return 0 ? 1 : __mingw_get_printf_count_output (); }
+
+inline __attribute__((__always_inline__)) int __attribute__((__cdecl__)) _set_printf_count_output (int __mode)
+{ return 0 ? 1 : __mingw_set_printf_count_output (__mode); }
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fgetchar (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fputchar (int);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * fdopen (int, const char *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fileno (FILE *);
+# 930 "c:\\mingw\\include\\stdio.h" 3
+inline __attribute__((__always_inline__)) FILE * __attribute__((__cdecl__)) __attribute__((__nothrow__)) fopen64 (const char *, const char *);
+inline __attribute__((__always_inline__))
+FILE * __attribute__((__cdecl__)) __attribute__((__nothrow__)) fopen64 (const char * filename, const char * mode)
+{ return fopen (filename, mode); }
+
+int __attribute__((__cdecl__)) __attribute__((__nothrow__)) fseeko64 (FILE *, __off64_t, int);
+
+
+
+
+
+
+inline __attribute__((__always_inline__)) __off64_t __attribute__((__cdecl__)) __attribute__((__nothrow__)) ftello64 (FILE *);
+inline __attribute__((__always_inline__))
+__off64_t __attribute__((__cdecl__)) __attribute__((__nothrow__)) ftello64 (FILE * stream)
+{ fpos_t __pos; return (fgetpos(stream, &__pos)) ? -1LL : (__off64_t)(__pos); }
+# 958 "c:\\mingw\\include\\stdio.h" 3
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fwprintf (FILE *, const wchar_t *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int wprintf (const wchar_t *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int vfwprintf (FILE *, const wchar_t *, __builtin_va_list);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int vwprintf (const wchar_t *, __builtin_va_list);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _snwprintf (wchar_t *, size_t, const wchar_t *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _vscwprintf (const wchar_t *, __builtin_va_list);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _vsnwprintf (wchar_t *, size_t, const wchar_t *, __builtin_va_list);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fwscanf (FILE *, const wchar_t *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int wscanf (const wchar_t *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int swscanf (const wchar_t *, const wchar_t *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t fgetwc (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t fputwc (wchar_t, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t ungetwc (wchar_t, FILE *);
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int swprintf (wchar_t *, const wchar_t *, ...);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int vswprintf (wchar_t *, const wchar_t *, __builtin_va_list);
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wchar_t * fgetws (wchar_t *, int, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int fputws (const wchar_t *, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t getwc (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t getwchar (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t putwc (wint_t, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t putwchar (wint_t);
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wchar_t * _getws (wchar_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _putws (const wchar_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * _wfdopen(int, const wchar_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * _wfopen (const wchar_t *, const wchar_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * _wfreopen (const wchar_t *, const wchar_t *, FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * _wfsopen (const wchar_t *, const wchar_t *, int);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wchar_t * _wtmpnam (wchar_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wchar_t * _wtempnam (const wchar_t *, const wchar_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _wrename (const wchar_t *, const wchar_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _wremove (const wchar_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) void _wperror (const wchar_t *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * _wpopen (const wchar_t *, const wchar_t *);
+
+
+
+
+
+
+__attribute__((__cdecl__)) __attribute__((__nothrow__)) int snwprintf (wchar_t *, size_t, const wchar_t *, ...);
+__attribute__((__cdecl__)) __attribute__((__nothrow__)) int vsnwprintf (wchar_t *, size_t, const wchar_t *, __builtin_va_list);
+# 1016 "c:\\mingw\\include\\stdio.h" 3
+__attribute__((__cdecl__)) __attribute__((__nothrow__)) int vwscanf (const wchar_t *__restrict__, __builtin_va_list);
+__attribute__((__cdecl__)) __attribute__((__nothrow__))
+int vfwscanf (FILE *__restrict__, const wchar_t *__restrict__, __builtin_va_list);
+__attribute__((__cdecl__)) __attribute__((__nothrow__))
+int vswscanf (const wchar_t *__restrict__, const wchar_t * __restrict__, __builtin_va_list);
+
+
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) FILE * wpopen (const wchar_t *, const wchar_t *);
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t _fgetwchar (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t _fputwchar (wint_t);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _getw (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int _putw (int, FILE *);
+
+
+
+
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t fgetwchar (void);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) wint_t fputwchar (wint_t);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int getw (FILE *);
+ __attribute__((__cdecl__)) __attribute__((__nothrow__)) int putw (int, FILE *);
+
+
+
+
+}
+# 3 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\ssd1306.h" 2
+# 33 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\ssd1306.h"
+
+# 33 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\ssd1306.h"
+void I2C_Init(void);
+void I2C_Start(void);
+void I2C_Repeted_Start(char read_address);
+void I2C_Stop(void);
+void I2C_WRITE(unsigned char data);
+char I2C_Read_Ack(void);
+
+void ssd1306_setup(void);
+void ssd1306_command(uint8_t c);
+void ssd1306_drawPixel(unsigned char x, unsigned char y, unsigned char color);
+void ssd1306_update(void);
+void ssd1306_clear(void);
+void SSD1306_DrawBitmap(int16_t x, int16_t y, const unsigned char* bitmap, int16_t w, int16_t h, uint16_t color);
+void ssd1306_Drawletter(int8_t x, int8_t y, uint8_t letter, uint8_t color);
+void ssd1306_Strings(int8_t x, int8_t y, char text[], uint8_t color);
+void ssd1306_drawrectagle(int8_t x, int8_t y, int8_t color, int8_t lenght , int8_t wide);
+void ssd1306_drawlinev(int8_t x, int8_t y, int8_t color, int8_t lenght);
+void ssd1306_drawlineh(int8_t x, int8_t y, int8_t color, int8_t lenght);
+void Init_Userinterface(void);
+# 5 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\main.cpp" 2
+# 1 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\font.h" 1
+# 10 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\font.h"
+static const char ASCI[96][5] = {
+ {0x00, 0x00, 0x00, 0x00, 0x00}
+,{0x00, 0x00, 0x5f, 0x00, 0x00}
+,{0x00, 0x07, 0x00, 0x07, 0x00}
+,{0x14, 0x7f, 0x14, 0x7f, 0x14}
+,{0x24, 0x2a, 0x7f, 0x2a, 0x12}
+,{0x23, 0x13, 0x08, 0x64, 0x62}
+,{0x36, 0x49, 0x55, 0x22, 0x50}
+,{0x00, 0x05, 0x03, 0x00, 0x00}
+,{0x00, 0x1c, 0x22, 0x41, 0x00}
+,{0x00, 0x41, 0x22, 0x1c, 0x00}
+,{0x14, 0x08, 0x3e, 0x08, 0x14}
+,{0x08, 0x08, 0x3e, 0x08, 0x08}
+,{0x00, 0x50, 0x30, 0x00, 0x00}
+,{0x08, 0x08, 0x08, 0x08, 0x08}
+,{0x00, 0x60, 0x60, 0x00, 0x00}
+,{0x20, 0x10, 0x08, 0x04, 0x02}
+,{0x3e, 0x51, 0x49, 0x45, 0x3e}
+,{0x00, 0x42, 0x7f, 0x40, 0x00}
+,{0x42, 0x61, 0x51, 0x49, 0x46}
+,{0x21, 0x41, 0x45, 0x4b, 0x31}
+,{0x18, 0x14, 0x12, 0x7f, 0x10}
+,{0x27, 0x45, 0x45, 0x45, 0x39}
+,{0x3c, 0x4a, 0x49, 0x49, 0x30}
+,{0x01, 0x71, 0x09, 0x05, 0x03}
+,{0x36, 0x49, 0x49, 0x49, 0x36}
+,{0x06, 0x49, 0x49, 0x29, 0x1e}
+,{0x00, 0x36, 0x36, 0x00, 0x00}
+,{0x00, 0x56, 0x36, 0x00, 0x00}
+,{0x08, 0x14, 0x22, 0x41, 0x00}
+,{0x14, 0x14, 0x14, 0x14, 0x14}
+,{0x00, 0x41, 0x22, 0x14, 0x08}
+,{0x02, 0x01, 0x51, 0x09, 0x06}
+,{0x32, 0x49, 0x79, 0x41, 0x3e}
+,{0x7e, 0x11, 0x11, 0x11, 0x7e}
+,{0x7f, 0x49, 0x49, 0x49, 0x36}
+,{0x3e, 0x41, 0x41, 0x41, 0x22}
+,{0x7f, 0x41, 0x41, 0x22, 0x1c}
+,{0x7f, 0x49, 0x49, 0x49, 0x41}
+,{0x7f, 0x09, 0x09, 0x09, 0x01}
+,{0x3e, 0x41, 0x49, 0x49, 0x7a}
+,{0x7f, 0x08, 0x08, 0x08, 0x7f}
+,{0x00, 0x41, 0x7f, 0x41, 0x00}
+,{0x20, 0x40, 0x41, 0x3f, 0x01}
+,{0x7f, 0x08, 0x14, 0x22, 0x41}
+,{0x7f, 0x40, 0x40, 0x40, 0x40}
+,{0x7f, 0x02, 0x0c, 0x02, 0x7f}
+,{0x7f, 0x04, 0x08, 0x10, 0x7f}
+,{0x3e, 0x41, 0x41, 0x41, 0x3e}
+,{0x7f, 0x09, 0x09, 0x09, 0x06}
+,{0x3e, 0x41, 0x51, 0x21, 0x5e}
+,{0x7f, 0x09, 0x19, 0x29, 0x46}
+,{0x46, 0x49, 0x49, 0x49, 0x31}
+,{0x01, 0x01, 0x7f, 0x01, 0x01}
+,{0x3f, 0x40, 0x40, 0x40, 0x3f}
+,{0x1f, 0x20, 0x40, 0x20, 0x1f}
+,{0x3f, 0x40, 0x38, 0x40, 0x3f}
+,{0x63, 0x14, 0x08, 0x14, 0x63}
+,{0x07, 0x08, 0x70, 0x08, 0x07}
+,{0x61, 0x51, 0x49, 0x45, 0x43}
+,{0x00, 0x7f, 0x41, 0x41, 0x00}
+,{0x02, 0x04, 0x08, 0x10, 0x20}
+,{0x00, 0x41, 0x41, 0x7f, 0x00}
+,{0x04, 0x02, 0x01, 0x02, 0x04}
+,{0x40, 0x40, 0x40, 0x40, 0x40}
+,{0x00, 0x01, 0x02, 0x04, 0x00}
+,{0x20, 0x54, 0x54, 0x54, 0x78}
+,{0x7f, 0x48, 0x44, 0x44, 0x38}
+,{0x38, 0x44, 0x44, 0x44, 0x20}
+,{0x38, 0x44, 0x44, 0x48, 0x7f}
+,{0x38, 0x54, 0x54, 0x54, 0x18}
+,{0x08, 0x7e, 0x09, 0x01, 0x02}
+,{0x0c, 0x52, 0x52, 0x52, 0x3e}
+,{0x7f, 0x08, 0x04, 0x04, 0x78}
+,{0x00, 0x44, 0x7d, 0x40, 0x00}
+,{0x20, 0x40, 0x44, 0x3d, 0x00}
+,{0x7f, 0x10, 0x28, 0x44, 0x00}
+,{0x00, 0x41, 0x7f, 0x40, 0x00}
+,{0x7c, 0x04, 0x18, 0x04, 0x78}
+,{0x7c, 0x08, 0x04, 0x04, 0x78}
+,{0x38, 0x44, 0x44, 0x44, 0x38}
+,{0x7c, 0x14, 0x14, 0x14, 0x08}
+,{0x08, 0x14, 0x14, 0x18, 0x7c}
+,{0x7c, 0x08, 0x04, 0x04, 0x08}
+,{0x48, 0x54, 0x54, 0x54, 0x20}
+,{0x04, 0x3f, 0x44, 0x40, 0x20}
+,{0x3c, 0x40, 0x40, 0x20, 0x7c}
+,{0x1c, 0x20, 0x40, 0x20, 0x1c}
+,{0x3c, 0x40, 0x30, 0x40, 0x3c}
+,{0x44, 0x28, 0x10, 0x28, 0x44}
+,{0x0c, 0x50, 0x50, 0x50, 0x3c}
+,{0x44, 0x64, 0x54, 0x4c, 0x44}
+,{0x00, 0x08, 0x36, 0x41, 0x00}
+,{0x00, 0x00, 0x7f, 0x00, 0x00}
+,{0x00, 0x41, 0x36, 0x08, 0x00}
+,{0x10, 0x08, 0x08, 0x10, 0x08}
+,{0x00, 0x06, 0x09, 0x09, 0x06}
+};
+# 6 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\main.cpp" 2
+# 1 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\ADC_Conversion.h" 1
+# 10 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\ADC_Conversion.h"
+float ADC_Configuration(uint8_t ADCx);
+void Clean_ADC_reg(void);
+# 7 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\main.cpp" 2
+# 1 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\pwm_time.h" 1
+
+
+
+
+void Timer_init();
+void Duty_Cycle(volatile uint16_t duty_cycle);
+# 8 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\main.cpp" 2
+# 18 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\main.cpp"
+volatile uint16_t duty_cycle_timer = 512;
+float setpoint= 1.0 ;
+volatile float average =0.0;
+volatile float current = 0.0;
+volatile float tension = 0.0;
+volatile float averageA = 0.0;
+
+float cell1V = 0.00;
+float cell2V = 0.00;
+float cell3V = 0.00;
+float calV = 0.00;
+float supplyV = 0.00;
+float cell1Cal = 80.00 + 20;
+float cell2Cal = 70.00 + 25;
+float cell3Cal = 80.00 + 15;
+float zenerV = 2.4;
+float cell1AverageVal = 0.00;
+float cell2AverageVal = 0.00;
+float cell3AverageVal = 0.00;
+float cell1AverageV = 0.00;
+float cell2AverageV = 0.00;
+float cell3AverageV = 0.00;
+
+float averageAmps = 0.00;
+float ampsAverageVal = 0.00;
+float ampSensorMillivolts = 0.00;
+float currentAmps = 0.00;
+volatile float ampsVal = 0;
+float ampsSensorVal = 0;
+float Amps = 0;
+
+float balanceVal = 4.0;
+
+float zenerVal = 0;
+float cell1Val = 0;
+float cell2Val = 0;
+float cell3Val = 0;
+float averages = 100;
+
+int cell1Bal = 2;
+int cell2Bal = 3;
+int cell3Bal = 4;
+int flag = 0;
+
+int battery_flag = 0;
+int battery_flag_1 = 0;
+int battery_flag_2 = 0;
+int battery_flag_3 = 0;
+int pwm =1;
+
+char v[10];
+char p[10];
+char d[10];
+char e[20];
+
+double offset = 0;
+double sensor = 0.185;
+
+void setup()
+{
+
+PinMode(PORTD,cell1Bal,1);
+PinMode(PORTD,cell2Bal,1);
+PinMode(PORTD,cell3Bal,1);
+PinMode(PORTB,pwm,1);
+
+
+PinMode(PORTC,3,0);
+PinMode(PORTC,6,0);
+
+WrtiePin(PORTC, 0, 0);
+WrtiePin(PORTC, 1, 0);
+WrtiePin(PORTC, 2, 0);
+
+
+
+
+
+I2C_Init();
+ssd1306_setup();
+ssd1306_update();
+I2C_Stop();
+Timer_init();
+
+
+Init_Userinterface();
+
+
+
+}
+
+void loop()
+{
+
+
+
+
+
+
+sei();
+
+cell1Val = ADC_Configuration(B00000000);
+cell1V = (cell1Val*(2.4/1023.0))*18;
+
+dtostrf(cell1V,2,1,v);
+ssd1306_Strings(0,55,v,1);
+ssd1306_update();
+delay(10);
+
+float diffcel1 = 4.2 - cell1V;
+
+
+cell2Val = ADC_Configuration(B00000001);
+cell2V = ((cell2Val*(2.4/1023.0))*18)-cell1V;
+
+dtostrf(cell2V,2,1,p);
+ssd1306_Strings(28,55,p,1);
+ssd1306_update();
+delay(10);
+
+cell3Val = ADC_Configuration(B00000010);
+cell3V = ((cell3Val*(2.4/1023.0))*18)-(cell1V+cell2V);
+
+dtostrf(cell3V,2,1,d);
+ssd1306_Strings(56,55,d,1);
+ssd1306_update();
+delay(50);
+
+for(average = 0; average<= 10;average++)
+{
+ampsVal = ADC_Configuration(B00000110)-825;
+tension = (ampsVal*30.0)/1023.0;
+current = ((tension - 0)/(sensor));
+delay(10);
+}
+averageA = current/average;
+
+
+dtostrf(averageA,1,1,e);
+ssd1306_Strings(35,1,e,1);
+ssd1306_update();
+Clean_ADC_reg();
+delay(100);
+
+if(averageA >= setpoint)
+{
+    duty_cycle_timer++;
+}
+else
+{
+if(averageA < (setpoint-0.5))
+{
+    duty_cycle_timer--;
+}
+}
+Duty_Cycle(duty_cycle_timer);
+# 185 "C:\\Users\\tudos\\OneDrive\\Documents\\Arduino\\sketch_nov04a\\main.cpp"
+}

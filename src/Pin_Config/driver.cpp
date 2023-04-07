@@ -1,7 +1,5 @@
 
-
 #include "driver.h"
-#include "math.h"
 
 
 void WrtiePin(uint8_t port, uint8_t pin, uint8_t state)
@@ -35,7 +33,7 @@ void WrtiePin(uint8_t port, uint8_t pin, uint8_t state)
     }
 }
 
-void PinMode(uint8_t port, uint8_t pin, uint8_t mode)
+ void PinMode(uint8_t port, uint8_t pin, uint8_t mode)
 {
     if (port == PORTB)
     {

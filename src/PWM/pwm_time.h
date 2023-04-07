@@ -1,5 +1,10 @@
 
-#include "driver.h"
+#include <Arduino.h>
+
+#ifndef PWM_TIME_H
+#define PWM_TIME_H
+
+#endif
 
 
 void Timer_init();

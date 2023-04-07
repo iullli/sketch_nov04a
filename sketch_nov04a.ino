@@ -1,9 +1,8 @@
 
-#include "driver.h"
-#include "ssd1306.h"
-#include "font.h"
-#include "ADC_Conversion.h"
-#include"pwm_time.h"
+#include "./src/Pin_Config/driver.h"
+#include "./src/Display/ssd1306.h"
+#include "./src/ADC/ADC_Conversion.h"
+#include "./src/PWM/pwm_time.h"
 
 
 #define V_devider 18
@@ -15,9 +14,13 @@
 #define offset_duty_cycle 0.5
 
 volatile uint16_t duty_cycle_timer = 512;
-uint8_t setpoint= 1 ;
+float setpoint= 1.0 ;
+volatile float average =0.0;
+volatile float current = 0.0;
+volatile float tension = 0.0;
+volatile float averageA = 0.0;
 
-float cell1V = 0.00;          // sets variable for the voltage of the first cell
+float cell1V = 0.00;          // sets variable for the voltage of the first celle
 float cell2V = 0.00;          // sets variable for the voltage of the second cell
 float cell3V = 0.00;          // sets variable for the voltage of the third cell
 float calV = 0.00;            // sets variable for supply voltage compensation
@@ -49,9 +52,9 @@ float cell2Val = 0;   // variable used for analog reading of cell 2
 float cell3Val = 0;   // variable used for analog reading of cell 3
 float averages = 100; // sets the number of averages taken during each voltage Measurement
 
-int cell1Bal = 2; // sets pin 2 as the output to control the balance circuit for cell 1
-int cell2Bal = 3; // sets pin 3 as the output to control the balance circuit for cell 2
-int cell3Bal = 4; // sets pin 4 as the output to control the balance circuit for cell 3
+uint8_t cell1Bal = 2; // sets pin 2 as the output to control the balance circuit for cell 1
+uint8_t cell2Bal = 3; // sets pin 3 as the output to control the balance circuit for cell 2
+uint8_t cell3Bal = 4; // sets pin 4 as the output to control the balance circuit for cell 3
 int flag = 0;     // sets up a flag for later use in cell balancing
 
 int battery_flag = 0;
@@ -66,7 +69,7 @@ char d[10];
 char e[20];
 
 double offset = 0;
-double sensor = 0.066;
+double sensor = 0.185;
 
 void setup()
 {
@@ -79,6 +82,7 @@ PinMode(PORTB,pwm,OUTPUT);
 
 PinMode(PORTC,3,INPUT);
 PinMode(PORTC,6,INPUT);
+PinMode(PORTB,9,OUTPUT); //// output pin 9 portb 
 
 WrtiePin(PORTC, 0, RESET);
 WrtiePin(PORTC, 1, RESET);
@@ -88,19 +92,15 @@ WrtiePin(PORTC, 2, RESET);
 // WrtiePin(PORTC, 7, RESET);
 
 
-
 I2C_Init();
 ssd1306_setup();
 ssd1306_update();
 I2C_Stop();
 Timer_init();
  
+// void ssd1306_drawrectagle(int8_t x, int8_t y, int8_t color, int8_t lenght , int8_t wide)
+Init_Userinterface();
 
-ssd1306_Strings(1,10,"Cell1:");
-ssd1306_Strings(1,20,"Cell2:");
-ssd1306_Strings(1,30,"Cell3:");
-ssd1306_Strings(1,1,"Amps:");
-ssd1306_update();
 
 
 }
@@ -119,7 +119,7 @@ cell1Val = ADC_Configuration(ADC0);
 cell1V = (cell1Val*Raw_to_user)*V_devider;
 
 dtostrf(cell1V,2,1,v);
-ssd1306_Strings(37,10,v);
+ssd1306_Strings(0,55,v,1);
 ssd1306_update();
 delay(10);
 
@@ -130,7 +130,7 @@ cell2Val = ADC_Configuration(ADC1);
 cell2V = ((cell2Val*Raw_to_user)*V_devider)-cell1V;
 
 dtostrf(cell2V,2,1,p);
-ssd1306_Strings(37,20,p);
+ssd1306_Strings(28,55,p,1);
 ssd1306_update();
 delay(10);
 
@@ -138,33 +138,63 @@ cell3Val = ADC_Configuration(ADC2);
 cell3V = ((cell3Val*Raw_to_user)*V_devider)-cell3_diff;
 
 dtostrf(cell3V,2,1,d);
-ssd1306_Strings(37,30,d);
+ssd1306_Strings(56,55,d,1);
 ssd1306_update();
 delay(50);
 
-
-ampsVal = ADC_Configuration(ADC6)-133;
-volatile double tension = (ampsVal*11)/1023.0;
-volatile double current = (tension - offset)/(sensor);
+for(average = 0; average<= 10;average++)
+{
+ampsVal = ADC_Configuration(ADC6)-825;
+tension = (ampsVal*30.0)/1023.0;
+current = ((tension - 0)/(sensor));
 delay(10);
+}
+averageA = current/average;
 
-dtostrf(current,2,1,e);
-ssd1306_Strings(35,1,e);
+
+dtostrf(averageA,1,1,e);
+ssd1306_Strings(35,1,e,1);
 ssd1306_update();
 Clean_ADC_reg();
-delay(10);
+delay(100);
 
-if(current >= setpoint)
+if(averageA >= setpoint)
 {
     duty_cycle_timer++;
 }
 else 
 {
-if(current < (setpoint-offset_duty_cycle))
+if(averageA < (setpoint-offset_duty_cycle))
 {
     duty_cycle_timer--;
 }
 }
 Duty_Cycle(duty_cycle_timer);
+
+if(cell3V > 4.2 )
+{
+    WrtiePin(PORTD,cell3Bal,SET);
+}else 
+{
+    WrtiePin(PORTD,cell3Bal,RESET);
+
+}
+if(cell2V > 4.2 )
+{
+    WrtiePin(PORTD,cell2Bal,SET);
+}else 
+{
+    WrtiePin(PORTD,cell2Bal,RESET);
+
+}
+if(cell1V > 4.2 )
+{
+    WrtiePin(PORTD,cell1Bal,SET);
+}else 
+{
+    WrtiePin(PORTD,cell1Bal,RESET);
+
+}
+// Duty_Cycle(512);
 
 }

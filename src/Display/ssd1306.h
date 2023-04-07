@@ -3,8 +3,13 @@
 #include <string.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "font.h"
+#include <Arduino.h>
 
+#ifndef SSD1306_H
+#define SSD1306_H
 
+#endif
 
 
 #define SSD1306_MEMORYMODE          0x20 
@@ -28,6 +33,30 @@
 #define SSD1306_SETSTARTLINE        0x40 
 #define SSD1306_DEACTIVATE_SCROLL   0x2E ///< Stop scroll
 #define SSD1306_FORCEDISPLAYON      0xA5
+
+
+void I2C_Init(void);
+void I2C_Start(void);
+void I2C_Repeted_Start(char read_address);
+void I2C_Stop(void);
+void I2C_WRITE(unsigned char data);
+char I2C_Read_Ack(void);
+
+void ssd1306_setup(void);
+void ssd1306_command(uint8_t c);
+void ssd1306_drawPixel(unsigned char x, unsigned char y, unsigned char color);
+void ssd1306_update(void);
+void ssd1306_clear(void);
+void SSD1306_DrawBitmap(int16_t x, int16_t y, const unsigned char* bitmap, int16_t w, int16_t h, uint16_t color);
+void ssd1306_Drawletter(int8_t x, int8_t y, uint8_t letter, uint8_t color);
+void ssd1306_Strings(int8_t x, int8_t y, char text[], uint8_t color);
+void ssd1306_drawrectagle(int8_t x, int8_t y, int8_t color, int8_t lenght , int8_t wide);
+void ssd1306_drawlinev(int8_t x, int8_t y, int8_t color, int8_t lenght);
+void ssd1306_drawlineh(int8_t x, int8_t y, int8_t color, int8_t lenght);
+void Init_Userinterface(void);
+
+
+
 
 
 
