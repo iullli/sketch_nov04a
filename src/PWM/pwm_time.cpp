@@ -1,29 +1,28 @@
 
 #include"pwm_time.h"
 
+const unsigned int TOP = 0x03FF; // 11-bit resolution.  7812 Hz PWM
 
 void Timer_init()
 {
-    TCCR1B &= ~(1<<WGM13);
-    TCCR1B |= (1<<WGM12);
-    TCCR1A |= (1<<WGM10) | (1<<WGM11);   /// TIMER 1 PWM 10 BIT MODE
+ pinMode(9,OUTPUT);
+ ICR1 = TOP;
+ TCCR1A |= (1<<COM1A1);
+ TCCR1A |= (1<<WGM10) | (1 << WGM12);
 
-    TCCR1A &= ~(1<<COM1A0);
-    TCCR1A |= (1<<COM1A1);      ////PWM non invrting mode
-
-    TCCR1B |=  (1<<CS10) | (1<<CS11);     /// prescaler = 64
-    TCCR1B &= ~(1<<CS12);
-
-
-
-
-// OCR1A = 1023;
-
-
+TIMSK1 |= (1<<TOIE1);
+  
+TCCR1B |= (1 << CS11) | (1 << CS10);
 }
 
-
-void Duty_Cycle( volatile uint16_t duty_cycle)
+void Enable_Timer()
 {
-   OCR1A = duty_cycle;  ///// duty cycle config
+     TCCR1A |= (1 << COM1A1);
+     pinMode(9,OUTPUT);
 }
+
+void Duty_Cycle( uint16_t duty_cycle)
+{
+   OCR1A = 2*duty_cycle;  ///// duty cycle config
+}
+

@@ -6,6 +6,10 @@
 #include "font.h"
 #include <Arduino.h>
 
+
+#define SET      1
+#define RESET    0
+
 #ifndef SSD1306_H
 #define SSD1306_H
 
@@ -53,7 +57,11 @@ void ssd1306_Strings(int8_t x, int8_t y, char text[], uint8_t color);
 void ssd1306_drawrectagle(int8_t x, int8_t y, int8_t color, int8_t lenght , int8_t wide);
 void ssd1306_drawlinev(int8_t x, int8_t y, int8_t color, int8_t lenght);
 void ssd1306_drawlineh(int8_t x, int8_t y, int8_t color, int8_t lenght);
-void Init_Userinterface(void);
+void Init_Userinterface(uint8_t);
+void Init_Chargeinterface(void);
+uint8_t Init_BatterySetup(void);
+void Init_Test(void);
+
 
 
 

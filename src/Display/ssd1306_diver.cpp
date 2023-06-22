@@ -1,23 +1,17 @@
 #include "ssd1306.h"
 #include <stdio.h>
 
+
 unsigned char ssd1306_buffer[1136];
 
 unsigned char ssd1306_write = 0b01111000; // i2c address
-unsigned char ssd1306_read = 0b01111001; // i2c addres
 
 //init
 
 void I2C_Init(void)
 {
-        // Activate the pull-up resistors for SDA/SCL(TWI).
-                                       // Otherwise, you need to attach external pull-ups
-
 	TWSR = 0x00;
 	TWBR  = ((F_CPU/ 100000) - 16) / (2*pow(4,(TWSR&((1<<TWPS0)|(1<<TWPS1)))));
-	
-
-    
 }
 
 //start
@@ -38,18 +32,12 @@ void I2C_Repeted_Start(char read_address)
 while(!(TWCR & (1<<TWINT)));
 }
 
-
-
-
 //stop
 void I2C_Stop(void)
 {
     TWCR = (1 << TWINT) | (1 << TWSTO) | (1 << TWEN);
     while(!(TWCR & (1<<TWSTO)));
 }
-
-
-
 
 
 /// write
@@ -153,8 +141,6 @@ void ssd1306_update()
   I2C_Stop();
 }
 
-
-
 void ssd1306_clear()
 {
     memset(ssd1306_buffer, 0, 1136); // make every bit a 0, memset in string.h
@@ -248,14 +234,51 @@ for(i = x;i <= lenght + x;i++)
 }
 }
 
-void Init_Userinterface(void)
+void Init_Userinterface(uint8_t selection)
 {
+switch(selection){
+    case 0:
+ssd1306_clear();
+ssd1306_drawrectagle(5,18,1,120,10);
+ssd1306_Strings(45,1,"Menu",1);
+ssd1306_Strings(45,20,"Start",0);
+ssd1306_Strings(38,35,"Battery ",1);
+ssd1306_Strings(45,50,"Test",1);
+ssd1306_update();
+   break;
+    case 1:
+ssd1306_clear();    
+ssd1306_drawrectagle(5,33,1,120,10);
+ssd1306_Strings(45,1,"Menu",1);
+ssd1306_Strings(45,20,"Start",1);
+ssd1306_Strings(38,35,"Battery ",0);
+ssd1306_Strings(45,50,"Test",1);
+ssd1306_update();
+   break;
+       case 2:
+ssd1306_clear();    
+ssd1306_drawrectagle(5,48,1,120,10);
+ssd1306_Strings(45,1,"Menu",1);
+ssd1306_Strings(45,20,"Start",1);
+ssd1306_Strings(38,35,"Battery ",1);
+ssd1306_Strings(45,50,"Test",0);
+ssd1306_update();
+   break;
+}
+ssd1306_update();
+
+}
+
+void Init_Chargeinterface()
+{
+ssd1306_clear();
+ssd1306_update();
 ssd1306_drawrectagle(4,20,1,17,30);
 ssd1306_drawrectagle(32,20,1,17,30);
 ssd1306_drawrectagle(60,20,1,17,30);
 ssd1306_Strings(110,1,"+",1);
 ssd1306_Strings(110,60,"-",1);
-ssd1306_Strings(55,1,"A",1);
+ssd1306_Strings(59,1,"A",1);
 ssd1306_drawlinev(13,2, 1, 20);
 ssd1306_drawlineh(7,3,1,20);
 ssd1306_drawlineh(35,3,1,37);
@@ -266,6 +289,121 @@ ssd1306_drawlineh(22,15,1,20);
 ssd1306_drawlinev(43,8,1,10);
 ssd1306_drawlinev(65,8,1,10);
 ssd1306_drawlineh(11,48,1,14);
+}
+
+void Init_Test()
+{
+    ssd1306_clear();
+    ssd1306_drawrectagle(4, 18, 1, 120, 7);
+    ssd1306_Strings(1, 18, "Cell1", 0);
+    ssd1306_Strings(1, 31, "D:", 1);
+    ssd1306_Strings(1, 52, "V: ", 1);
+    ssd1306_Strings(43, 18, "Cell2", 0);
+     ssd1306_Strings(43, 31, "D:", 1);
+    ssd1306_Strings(43, 52, "V: ", 1);
+    ssd1306_Strings(83, 18, "Cell3", 0);
+    ssd1306_Strings(83, 31, "D:", 1);
+    ssd1306_Strings(83, 52, "V: ", 1);
+    ssd1306_drawlinev(45, 10, 1, 40);
+    ssd1306_drawlinev(85, 10, 1, 40);
+    ssd1306_update();
+}
+
+uint8_t Init_BatterySetup()
+{
+    static uint8_t counter;
+    uint8_t selectButton = 0;
+    static uint8_t configFlag;
+    uint8_t readdownButton = 0;
+    uint8_t readupButton = 0;
+
+
+ssd1306_clear();
+readdownButton=digitalRead(12);
+delay(50);
+readupButton=digitalRead(11);
+delay(50);
+selectButton=digitalRead(7);
+delay(50);
+
+
+if(readdownButton == 0)
+{
+    counter++;
+}
+
+if(readupButton == 0)
+{
+    counter--;
+}
+
+switch(counter){
+    case 0:
+ssd1306_clear();
+ssd1306_drawrectagle(5,8,1,120,10);
+ssd1306_Strings(4,10,"Configuration: 3S1P",0);
+ssd1306_Strings(4,20,"Configuration: 3S2P",1);
+ssd1306_Strings(4,30,"Configuration: 4S1P",1);
+ssd1306_Strings(4,40,"Configuration: 4S2P",1);
 ssd1306_update();
+   break;
+    case 1:
+ssd1306_clear();    
+ssd1306_Strings(4,10,"Configuration: 3S1P",1);
+ssd1306_drawrectagle(5,18,1,120,10);
+ssd1306_Strings(4,20,"Configuration: 3S2P",0);
+ssd1306_Strings(4,30,"Configuration: 4S1P",1);
+ssd1306_Strings(4,40,"Configuration: 4S2P",1);
+ssd1306_update();
+    break;
+    case 2:
+ssd1306_clear();    
+ssd1306_Strings(4,10,"Configuration: 3S1P",1);
+ssd1306_Strings(4,20,"Configuration: 3S2P",1);
+ssd1306_drawrectagle(5,28,1,120,10);
+ssd1306_Strings(4,30,"Configuration: 4S1P",0);
+ssd1306_Strings(4,40,"Configuration: 4S2P",1);
+ssd1306_update();
+   break;
+       case 3:
+ssd1306_clear();    
+ssd1306_Strings(4,10,"Configuration: 3S1P",1);
+ssd1306_Strings(4,20,"Configuration: 3S2P",1);
+ssd1306_Strings(4,30,"Configuration: 4S1P",1);
+ssd1306_drawrectagle(5,38,1,120,10);
+ssd1306_Strings(4,40,"Configuration: 4S2P",0);
+ssd1306_update();
+   break;
 
 }
+   if(counter > 3){
+    counter = 0;
+   }
+if((counter == 0) && (selectButton == 0))
+{
+    configFlag = 1;
+    return(configFlag);
+} else{
+    if((counter == 1) && (selectButton == 0))
+     {
+    configFlag = 2;
+    return(configFlag);
+     }else{
+     if((counter == 2) && (selectButton == 0))
+     {
+     configFlag = 3;
+     return(configFlag);
+     }else{
+        if((counter == 3) && (selectButton == 0))
+        {
+     configFlag = 4;
+     return(configFlag);
+        }
+            configFlag = 0;
+            return(configFlag);
+        }
+     }
+}
+}
+
+

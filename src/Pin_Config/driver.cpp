@@ -47,9 +47,16 @@ void WrtiePin(uint8_t port, uint8_t pin, uint8_t state)
         }
         else
         {
+        if (port == PORTD)
+        {
+            DDRC |= (mode << pin);
+        }
+        else
+        {
 
             DDRD |= (mode << pin);
         }
+    }
     }
 }
 
