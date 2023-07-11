@@ -7,41 +7,31 @@
 #include <avr/interrupt.h>
 #include <Arduino.h>
 
-#define V_devider 18
+#define V_devider 5.6
 #define Raw_to_user (2.37 / 1023.0)
 #define cell3_diff (cell1V + cell2V)
 
 #define firstcell 4.2
 #define secondcell 8.4
 #define offset_duty_cycle 0.5
-#define offset_cell1 0.30
-#define offset_cell2 0.10
-#define offset_cell3 -0.2
+#define offset_cell1 0.0
+#define offset_cell2 0.0
+#define offset_cell3 0.0
 
 unsigned long startMillis = millis();
 
 uint16_t duty_cycle_timer = 1023;
-float setpoint = 1.0;
 
-float panell_voltage = 0.0;
-float conversion_voltage = 0.0;
 
-float cell1V = 0.00;          // sets variable for the voltage of the first celle
-float cell2V = 0.00;          // sets variable for the voltage of the second cell
-float cell3V = 0.00;          // sets variable for the voltage of the third cell
+
+
 float cell1AverageVal = 0.00; // sets variable for use in calculating the average voltage of cell 1
 float cell2AverageVal = 0.00; // sets variable for use in calculating the average voltage of cell 2
 float cell3AverageVal = 0.00; // sets variable for use in calculating the average voltage of cell 3
 float panelAverage = 0.00;
 
-float averageAmps = 0.00; // set variable for the average amperage going into the battery pack
-float ampsVal = 0;        // store the analog value for the ACS 712 without the offset
 
 float balanceVal = 4.0; // voltage where the balancing circuits kick in
-
-float cell1Val = 0; // variable used for analog reading of cell 1
-float cell2Val = 0; // variable used for analog reading of cell 2
-float cell3Val = 0; // variable used for analog reading of cell 3
 
 float voltageLimit = 0.0; /// voltage limit for buck converter output
 float currentLimit = 0.0;
@@ -66,9 +56,7 @@ uint8_t backButton = 0;
 uint8_t upButton = 4;
 volatile uint8_t menuSelection = 0;
 uint8_t actualStateupButton = 0;
-uint8_t previousStateupButton = 0;
 uint8_t actualStatedownButton = 0;
-uint8_t previousStatedownButton = 0;
 uint8_t stateEnterButton = 0;
 uint8_t stateStopButton = 0;
 uint8_t startchargeFlag = 0;
@@ -76,11 +64,8 @@ volatile uint8_t stopCharge = 0;
 uint8_t selectedMode = 0;
 uint8_t configCharge = 1;
 
-char v[5]={0};
-char p[5]={0};
-char d[5]={0};
-char e[5]={0};
-char f[5]={0};
+
+
 char r[5]={0};
 
 void Chargin_Enable();
@@ -139,15 +124,7 @@ void loop()
 {
     duty_cycle_timer = 1023;
 
-    actualStateupButton = digitalRead(12);
-    previousStateupButton = actualStateupButton;
-    delay(100);
-    actualStatedownButton = digitalRead(11);
-    previousStatedownButton = actualStatedownButton;
-    delay(100);
     stateEnterButton = digitalRead(7);
-    delay(100);
-
     if (stateEnterButton != SET)
     {
         startchargeFlag = 1;
@@ -157,12 +134,14 @@ void loop()
         startchargeFlag = 0;
     }
 
-    if (actualStateupButton != SET)
+    actualStateupButton = digitalRead(12);
+    if (actualStateupButton != HIGH)
     {
         menuSelection++;
     }
 
-    if (actualStatedownButton != SET)
+    actualStatedownButton = digitalRead(11);
+    if (actualStatedownButton != HIGH)
     {
         menuSelection--;
     }
@@ -201,9 +180,8 @@ void loop()
 
     if ((menuSelection == 2) && (startchargeFlag == 1))
     {
-        while ((stopCharge == 0) && (emergencyFlag == 0))
+        while (stopCharge == 0)
         {
-            Init_Test();
             Test_Batteries();
         }
         stopCharge = 0;
@@ -214,10 +192,27 @@ void loop()
 }
 void Chargin_Enable()
 {
+    float cell1Val = 0; // variable used for analog reading of cell 1
+    float cell2Val = 0; // variable used for analog reading of cell 2
+    float cell3Val = 0; // variable used for analog reading of cell 3
+    float conversion_voltage = 0.0;
+    float cell1V = 0.00;          // sets variable for the voltage of the first celle
+    float cell2V = 0.00;          // sets variable for the voltage of the second cell
+    float cell3V = 0.00;          // sets variable for the voltage of the third cell
+
+    char v[5]={0};
+    char p[5]={0};
+    char d[5]={0};
+    char e[5]={0};
+    char f[5]={0};
+
     float sensitivity = 0.185;
     float current = 0.0;
     float currentSum = 0.0;
     float diff = 2.37;
+    float averageAmps = 0.00; // set variable for the average amperage going into the battery pack
+    float ampsVal = 0;        // store the analog value for the ACS 712 without the offset
+ 
 
     switch (configCharge)
     {
@@ -278,29 +273,25 @@ void Chargin_Enable()
     }
     current = (currentSum / averageBalance);
 
-    if (((panelAverage / averageBalance) + 1.0) > voltageLimit)
+    if (((panelAverage / averageBalance)+0.4) > voltageLimit)
     {
-        duty_cycle_timer = duty_cycle_timer + 10;
+        duty_cycle_timer++;
         constrain(duty_cycle_timer, 0, 1023);
     }
     else
     {
-        duty_cycle_timer = duty_cycle_timer - 5;
-        constrain(duty_cycle_timer, 0, 1023);
-    }
-
-     if ((current) >= currentLimit)
+     if (current > currentLimit)
         {
-            duty_cycle_timer = duty_cycle_timer + 10;
-            constrain(duty_cycle_timer, 1, 1023);
+            duty_cycle_timer++;
+            constrain(duty_cycle_timer, 0, 1023);
         }
         else
         {
-            duty_cycle_timer = duty_cycle_timer - 10;
-            constrain(duty_cycle_timer, 1, 1023);
+            duty_cycle_timer--;
+            constrain(duty_cycle_timer, 0, 1023);
         }
 
-    // Duty_Cycle(duty_cycle_timer);
+    }
 
     dtostrf(((cell1AverageVal / averageBalance) + offset_cell1), 2, 1, v);
     ssd1306_Strings(0, 55, v, 1);
@@ -314,7 +305,7 @@ void Chargin_Enable()
     ssd1306_Strings(56, 55, d, 1);
     ssd1306_update();
 
-    dtostrf((panelAverage / averageBalance) + 0.8, 2, 1, f);
+    dtostrf((panelAverage / averageBalance) + 0.4, 2, 1, f);
     ssd1306_Strings(95, 30, f, 1);
     ssd1306_update();
 
@@ -394,24 +385,34 @@ ISR(TIMER1_OVF_vect)
 
 void Test_Batteries()
 {
+       uint8_t startCheck = 0;
     uint8_t statusCheck = 0;
-    uint8_t testFlag = 0;
-    uint8_t startButton = 0;
-    uint8_t relayConected = 0;
-    uint8_t readRelayconnected = 0;
-    uint8_t showFlag = 0;
-
-    float cell1Reading = 0.0;
-    float cell2Reading = 0.0;
-    float cell3Reading = 0.0;
 
     float cell1Freevoltage = 0.0;
     float cell2Freevoltage = 0.0;
     float cell3Freevoltage = 0.0;
+    float cell1Loadvoltage = 0.0;
+    float cell2Loadvoltage = 0.0;
+    float cell3Loadvoltage = 0.0;
+    float cell1Loadcurrent = 0.0;
+    float cell2Loadcurrent = 0.0;
+    float cell3Loadcurrent = 0.0;
+    float cell1Freecurrent = 0.0;
+    float cell2Freecurrent = 0.0;
+    float cell3Freecurrent = 0.0;
+    float loadResistance = 8.2;
+    float freeResistance = 18000.0;
+    float cell1Rinternal = 0.0;
+    float cell2Rinternal = 0.0;
+    float cell3Rinternal = 0.0;
 
-    float cell1LoadVoltage = 0.0;
-    float cell2LoadVoltage = 0.0;
-    float cell3LoadVoltage = 0.0;
+    float cell1F =0.0;
+    float cell2F =0.0;
+    float cell3F =0.0;
+
+   float cell1V =0.0;
+    float cell2V =0.0;
+    float cell3V =0.0;
 
     float cell1ADC = 0.0;
     float cell2ADC = 0.0;
@@ -421,89 +422,39 @@ void Test_Batteries()
     float cell2Volt = 0.0;
     float cell3Volt = 0.0;
 
-    float deltacell1Volt = 0.0;
-    float deltacell2Volt = 0.0;
-    float deltacell3Volt = 0.0;
+    float cell1ADCLoad = 0.0;
+    float cell2ADCLoad = 0.0;
+    float cell3ADCLoad = 0.0;
 
-    char a[5] = {0};
-    char b[5] = {0};
-    char c[5] = {0};
+    char a[10];
+    char b[10];
+    char c[10];
 
-    char delta1[5] = {0};
-    char delta2[5] = {0};
-    char delta3[5] = {0};
+    char res1[10];
+    char res2[10];
+    char res3[10];
 
-    unsigned long currentMillis = 0;
-    unsigned long timePeriod = 602000;
+    ssd1306_clear();
+    ssd1306_drawrectagle(4, 18, 1, 120, 7);
+    ssd1306_Strings(1, 18, "Cell1", 0);
+    ssd1306_Strings(1, 31, "Rb: ", 1);
+    ssd1306_Strings(1, 52, "V: ", 1);
 
-    while (emergencyFlag == 0)
-    {
-        startButton = digitalRead(7);
-        while ((startButton == 0) && (testFlag == 0))
-        {
-            currentMillis = millis();
-            if (currentMillis - startMillis >= timePeriod)
-            {
-           
-                digitalWrite(6, LOW);
-                startMillis = currentMillis;
-                startButton = 1;
-                relayConected = 1;
-                statusCheck = 1;
-            }
-            else
-            {
-                showFlag = 0;
-            if(startButton == 0)
-                     {
-                digitalWrite(6, HIGH);
-                     
-                cell1ADC = ADC_Configuration(ADC0);
-                delay(50);
-                cell1Reading = (cell1ADC * Raw_to_user) * V_devider;
+    ssd1306_Strings(43, 18, "Cell2", 0);
+    ssd1306_Strings(43, 31, "Rb: ", 1);
+    ssd1306_Strings(43, 52, "V: ", 1);
 
-                cell2ADC = ADC_Configuration(ADC1);
-                delay(50);
-                cell2Reading = ((cell2ADC * Raw_to_user) * V_devider) - cell1Reading;
+    ssd1306_Strings(83, 18, "Cell3", 0);
+    ssd1306_Strings(83, 31, "Rb: ", 1);
+    ssd1306_Strings(83, 52, "V: ", 1);
 
-                cell3ADC = ADC_Configuration(ADC2);
-                delay(50);
-                cell3Reading = ((cell3ADC * Raw_to_user) * V_devider) - (cell1Reading + cell2Reading);
+    ssd1306_drawlinev(45, 10, 1, 40);
+    ssd1306_drawlinev(85, 10, 1, 40);
+    ssd1306_update();
 
-                dtostrf(cell1Reading, 2, 1, a);
-                ssd1306_Strings(13, 52, a, 1);
-                ssd1306_update();
+    
 
-                dtostrf(cell2Reading, 2, 1, b);
-                ssd1306_Strings(57, 52, b, 1);
-                ssd1306_update();
-
-                dtostrf(cell3Reading, 2, 1, c);
-                ssd1306_Strings(98, 52, c, 1);
-                ssd1306_update();
-}
-                if(cell1Reading < 2.0) 
-                {
-                    ssd1306_clear();
-                    ssd1306_Strings(11, 42, "Battery 1 weak !", 1);
-                    ssd1306_update();
-                    digitalWrite(6, LOW);
-                    delay(5000);
-                    emergencyFlag = 1;
-                }
-                    if(cell2Reading < 2.0)
-                    {
-                        ssd1306_clear();
-                        ssd1306_Strings(11, 42, "Battery 2 weak !", 1);
-                        ssd1306_update();
-                        digitalWrite(6, LOW);
-                    delay(5000);
-                    emergencyFlag = 1;
-                    }
-
-            }
-        }
-        for (int i = 0; i <= 100; i++)
+        for (int i = 0; i <= 500; i++)
         {
             cell1ADC = ADC_Configuration(ADC0);
             delay(1);
@@ -517,86 +468,137 @@ void Test_Batteries()
 
             cell3ADC = ADC_Configuration(ADC2);
             delay(1);
-            cell3Volt = ((cell3ADC * Raw_to_user) * V_devider) - (cell1Volt + cell2Volt);
+            cell3Volt = ((cell3ADC * Raw_to_user) * V_devider) - (cell1Volt+cell2Volt);
             cell3AverageVal = cell3AverageVal + cell3Volt;
         }
 
-        cell1Reading = ((cell1AverageVal / 100) + offset_cell1);
-        cell2Reading = ((cell2AverageVal / 100) + offset_cell2);
-        cell3Reading = ((cell3AverageVal / 100) + offset_cell3);
+
+        cell1Freevoltage = ((cell1AverageVal / 500) + offset_cell1);
+        cell2Freevoltage = ((cell2AverageVal / 500) + offset_cell2);
+        cell3Freevoltage = ((cell3AverageVal / 500) + offset_cell3);
+
+        dtostrf(cell1Freevoltage, 2, 1, a);
+        ssd1306_Strings(13, 52, a, 1);
+        ssd1306_update();
+
+        dtostrf(cell2Freevoltage, 2, 1, b);
+        ssd1306_Strings(57, 52, b, 1);
+        ssd1306_update();
+
+        dtostrf(cell3Freevoltage, 2, 1, c);
+        ssd1306_Strings(98, 52, c, 1);
+        ssd1306_update();
+
+
+    while (stopCharge == 0)
+    {
+
+   startCheck = digitalRead(7);
+
+        if (startCheck != SET)
+        {
+            statusCheck = 1;
+
+            cell1F = cell1Freevoltage;
+            cell2F = cell2Freevoltage;
+            cell3F = cell3Freevoltage;
 
         cell1AverageVal = 0.0;
         cell2AverageVal = 0.0;
         cell3AverageVal = 0.0;
 
-        if (relayConected == 1)
-        {
-            cell1LoadVoltage = cell1Reading;
-            cell2LoadVoltage = cell2Reading;
-            cell3LoadVoltage = cell3Reading;
-
-            relayConected = 0;
-            readRelayconnected = 1;
-        }
-        else
-        {
-            if (readRelayconnected == 0)
+            for (int i = 0; i <= 1000; i++)
             {
-                cell1Freevoltage = cell1Reading;
-                cell2Freevoltage = cell2Reading;
-                cell3Freevoltage = cell3Reading;
+                digitalWrite(6, HIGH);
+
+                cell1ADCLoad = ADC_Configuration(ADC0);
+                delay(1);
+                cell1V = (cell1ADCLoad * Raw_to_user) * V_devider;
+                cell1AverageVal = cell1AverageVal + cell1V;
+
+                cell2ADCLoad = ADC_Configuration(ADC1);
+                delay(1);
+                cell2V = ((cell2ADCLoad * Raw_to_user) * V_devider) - cell1V;
+                cell2AverageVal = cell2AverageVal + cell2V;
+
+                cell3ADCLoad = ADC_Configuration(ADC2);
+                delay(1);
+                cell3V = ((cell3ADCLoad * Raw_to_user) * V_devider) - cell3_diff;
+                cell3AverageVal = cell3AverageVal + cell3V;
             }
+
+            cell1Loadvoltage = cell1AverageVal / 1000;
+            cell2Loadvoltage = cell2AverageVal / 1000;
+            cell3Loadvoltage = cell3AverageVal / 1000;
+
+
+            digitalWrite(6, LOW);
+        }
+        if (statusCheck == 1)
+        {
+            cell1Freecurrent = cell1F / freeResistance;
+            cell1Loadcurrent = (cell1Loadvoltage / loadResistance)*3.0;
+            cell1Rinternal = (cell1F - cell1Loadvoltage) / (cell1Loadcurrent - cell1Freecurrent);
+
+            cell2Freecurrent = cell2F / freeResistance;
+            cell2Loadcurrent = (cell2Loadvoltage /loadResistance)*3.0;
+            cell2Rinternal = (cell2F - cell2Loadvoltage) / (cell2Loadcurrent - cell2Freecurrent);
+
+            cell3Freecurrent = cell3F / freeResistance;
+            cell3Loadcurrent = (cell3Loadvoltage / loadResistance)*3.0;
+            cell3Rinternal = (cell3F - cell3Loadvoltage) / (cell3Loadcurrent - cell3Freecurrent);
+
+        dtostrf(cell1Rinternal, 2, 1, res1);
+
+        dtostrf(cell2Rinternal, 2, 1, res2);
+
+        dtostrf(cell3Rinternal, 2, 1, res3);
+       
+
         }
 
-        deltacell1Volt = cell1Freevoltage - cell1LoadVoltage;
-        deltacell2Volt = cell2Freevoltage - cell2LoadVoltage;
-        deltacell3Volt = cell3Freevoltage - cell3LoadVoltage;
-
-        dtostrf(deltacell1Volt, 2, 1, delta1);
-        dtostrf(deltacell2Volt, 2, 1, delta2);
-        dtostrf(deltacell3Volt, 2, 1, delta3);
-
-        if ((deltacell1Volt < 0.5) && (statusCheck == 1))
+        if ((cell1Rinternal < 0.2) && (statusCheck == 1))
         {
             ssd1306_Strings(11, 42, "OK", 1);
-            ssd1306_Strings(15, 31, delta1, 1);
+            ssd1306_Strings(20, 31, res1, 1);
             ssd1306_update();
         }
-        if ((deltacell1Volt >= 0.5) && (statusCheck == 1))
+        if ((cell1Rinternal >= 0.2) && (statusCheck == 1))
         {
             ssd1306_Strings(11, 40, "BAD", 1);
-            ssd1306_Strings(20, 31, delta1, 1);
+            ssd1306_Strings(20, 31, res1, 1);
             ssd1306_update();
         }
 
-        if ((deltacell2Volt < 0.5) && (statusCheck == 1))
+        if ((cell2Rinternal < 0.2) && (statusCheck == 1))
         {
             ssd1306_Strings(52, 42, "OK", 1);
-            ssd1306_Strings(60, 31, delta2, 1);
+            ssd1306_Strings(60, 31, res2, 1);
             ssd1306_update();
         }
-        if ((deltacell2Volt >= 0.5) && (statusCheck == 1))
+        if ((cell2Rinternal >= 0.2) && (statusCheck == 1))
         {
             ssd1306_Strings(52, 40, "BAD", 1);
-            ssd1306_Strings(60, 31, delta2, 1);
+            ssd1306_Strings(60, 31, res2, 1);
             ssd1306_update();
         }
 
-        if ((deltacell3Volt < 0.5) && (statusCheck == 1))
+        if ((cell3Rinternal < 0.2) && (statusCheck == 1))
         {
             ssd1306_Strings(95, 42, "OK", 1);
-            ssd1306_Strings(100, 31, delta3, 1);
+            ssd1306_Strings(100, 31, res3, 1);
             ssd1306_update();
         }
-        if ((deltacell3Volt >= 0.5) && (statusCheck == 1))
+        if ((cell3Rinternal >= 0.2) && (statusCheck == 1))
         {
             ssd1306_Strings(95, 40, "BAD", 1);
-            ssd1306_Strings(100, 31, delta3, 1);
+            ssd1306_Strings(100, 31, res3, 1);
             ssd1306_update();
         }
 
         cell1AverageVal = 0.0;
         cell2AverageVal = 0.0;
         cell3AverageVal = 0.0;
+        statusCheck = 0;
     }
 }

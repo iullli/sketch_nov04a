@@ -1,9 +1,7 @@
 #include "ssd1306.h"
 #include <stdio.h>
 
-
-unsigned char ssd1306_buffer[1136];
-
+unsigned char ssd1306_buffer[1136]={};
 unsigned char ssd1306_write = 0b01111000; // i2c address
 
 //init
@@ -19,7 +17,6 @@ void I2C_Start(void)
 {
  TWCR = (1 << TWSTA) | (1 << TWEN) | (1 << TWINT) ;
  while(!(TWCR & (1<<TWINT)));
-
 }
 
 void I2C_Repeted_Start(char read_address)
@@ -139,6 +136,7 @@ void ssd1306_update()
        I2C_WRITE(*ptr++);
     }
   I2C_Stop();
+
 }
 
 void ssd1306_clear()
@@ -173,7 +171,7 @@ void SSD1306_DrawBitmap(int16_t x, int16_t y, const unsigned char* bitmap, int16
 void ssd1306_Drawletter(int8_t x, int8_t y, uint8_t letter, uint8_t color)
 {
     uint8_t call = 0 ;
-    uint8_t diff = letter - 0x20;
+    uint8_t diff = letter - 0x2B;
        for(int j = 0; j<= 4; j++)
     {
              for(int k = 0; k<=7;k++)
@@ -243,7 +241,7 @@ ssd1306_drawrectagle(5,18,1,120,10);
 ssd1306_Strings(45,1,"Menu",1);
 ssd1306_Strings(45,20,"Start",0);
 ssd1306_Strings(38,35,"Battery ",1);
-ssd1306_Strings(45,50,"Test",1);
+ssd1306_Strings(30,50,"Resistance",1);
 ssd1306_update();
    break;
     case 1:
@@ -252,7 +250,7 @@ ssd1306_drawrectagle(5,33,1,120,10);
 ssd1306_Strings(45,1,"Menu",1);
 ssd1306_Strings(45,20,"Start",1);
 ssd1306_Strings(38,35,"Battery ",0);
-ssd1306_Strings(45,50,"Test",1);
+ssd1306_Strings(30,50,"Resistance",1);
 ssd1306_update();
    break;
        case 2:
@@ -261,7 +259,7 @@ ssd1306_drawrectagle(5,48,1,120,10);
 ssd1306_Strings(45,1,"Menu",1);
 ssd1306_Strings(45,20,"Start",1);
 ssd1306_Strings(38,35,"Battery ",1);
-ssd1306_Strings(45,50,"Test",0);
+ssd1306_Strings(30,50,"Resistance",0);
 ssd1306_update();
    break;
 }
